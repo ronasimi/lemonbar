@@ -25,7 +25,7 @@ color_sec_b1="#CC282A2E"            # Background for section 1
 color_sec_b2="#CC454A4F"            # Background for section 2
 color_sec_b3="#CC60676E"            # Background for section 3
 color_icon="#CCAFAFAF"              # For icons
-color_mail="#CC8c9440"              # Background color for mail alert
+color_mail="#CCde935f"              # Background color for mail alert
 color_chat="#CCCC6666"              # Background color for chat alert
 color_cpu="#CCa54242"               # Background color for cpu alert
 color_net="#CC5E8D87"               # Background color for net alert
@@ -47,6 +47,7 @@ sep_l_right=""                     # Powerline light sepatator right
 
 # Icon glyphs from Terminusicons2
 icon_clock=""                      # Clock icon
+icon_cal=""			    # Calendar icon
 icon_cpu=""                        # CPU icon
 icon_mem=""                        # MEM icon
 icon_dl=""                         # Download icon
