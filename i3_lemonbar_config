@@ -20,17 +20,17 @@ upd_mpd=5                           # MPD song update
 # color definitions
 color_back="#CC2f343f"              # Default background
 color_fore="#CCC5C8C6"              # Default foreground
-color_head="#CCB5BD68"              # Background for first element
+color_head="#CC5f819d"              # Background for first element
 color_sec_b1="#CC282A2E"            # Background for section 1
 color_sec_b2="#CC454A4F"            # Background for section 2
 color_sec_b3="#CC60676E"            # Background for section 3
 color_icon="#CCAFAFAF"              # For icons
-color_mail="#CCDE935F"              # Background color for mail alert
+color_mail="#CC8c9440"              # Background color for mail alert
 color_chat="#CCCC6666"              # Background color for chat alert
-color_cpu="#CC5F819D"               # Background color for cpu alert
+color_cpu="#CCa54242"               # Background color for cpu alert
 color_net="#CC5E8D87"               # Background color for net alert
 color_disable="#CC1D1F21"           # Foreground for disable elements
-color_wsp="#CC8C9440"               # Background for selected workspace
+color_wsp="#CCb5bd68"               # Background for selected workspace
 color_bat="#CCA54242"               # Backround for battery
 #default space between sections
 if [ ${res_w} -gt 1024 ]; then

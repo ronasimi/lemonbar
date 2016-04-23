@@ -50,7 +50,7 @@ while read -r line ; do
       wland="%{F${wlan_cback}}${sep_left}%{F${wlan_cicon} B${wlan_cback}} %{T2}${icon_dl}%{F${wlan_cfore} T1} ${wland_v}"
       wlanu="%{F${wlan_cicon}}${sep_l_left} %{T2}${icon_ul}%{F${wlan_cfore} T1} ${wlanu_v}"
       # bat
-      bat="%{F${color_sec_b2}}${sep_left}%{B${color_sec_b2}}%{F${cpu_cicon}}%{T2}%{F${cpu_cfore} T1} ${icon_bat} ${sys_arr[9]}% ${sys_arr[10]}"
+      bat="%{F${color_sec_b2}}${sep_left}%{B${color_sec_b2}}%{F${color_icon}}%{T2}%{F${color_fore} T1} ${icon_bat} ${sys_arr[9]}% ${sys_arr[10]}"
       ;;
     VOL*)
       # Volume
@@ -98,7 +98,7 @@ while read -r line ; do
       # window title
       title=$(xprop -id ${line#???} | awk '/_NET_WM_NAME/{$1=$2="";print}' | cut -d'"' -f2)
       #title="%{F${color_head} B${color_sec_b2}}${sep_right}%{F${color_head} B${color_sec_b2}%{T2} ${icon_prog} %{F${color_sec_b2} B-}${sep_right}%{F- B- T1} ${title}"
-      title="%{F${color_head} B${color_sec_b2}}${sep_right}%{F${color_head} B${color_sec_b2} T2} ${icon_prog} %{F${color_sec_b2} B-}%{F- B- T1}%{F${color_sec_b2}}${sep_right}%{F${color_icon}} ${title}"
+      title="%{F${color_head} B${color_sec_b2}}${sep_right}%{F${color_icon} B${color_sec_b2} T2} ${icon_prog} %{F${color_sec_b2} B-}%{F- B- T1}%{F${color_sec_b2}}${sep_right}%{F${color_icon}} ${title}"
       ;;
   esac
 
