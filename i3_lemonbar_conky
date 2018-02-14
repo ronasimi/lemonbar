@@ -2,7 +2,7 @@
 # out simple text to console
 
 background no
-update_interval 2
+update_interval 1
 total_run_times 0
 override_utf8_locale yes
 short_units yes
@@ -18,7 +18,11 @@ ${time %a %b %d %H:%M} \
 ${cpu} \
 ${mem} \
 ${fs_used_perc /} \
-${if_up wlp3s0}${downspeedf wlp3s0} ${upspeedf wlp3s0} \
-${else}down down${endif} \
+${if_existing /proc/net/route enp0s25}up \
+${else}down${endif} \
+${if_up wlp3s0}up \
+${else}down${endif} \
+${if_existing /proc/net/route enp0s26u1u1}up \
+${else}down${endif} \
 ${battery_percent} \
 ${battery_short} \

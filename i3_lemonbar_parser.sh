@@ -35,26 +35,41 @@ while read -r line ; do
       mem="%{F${cpu_cicon}}${sep_l_left} %{T2}${icon_mem}%{F${cpu_cfore} T1} ${sys_arr[5]}"
       # disk /
       diskr="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_hd} %{F- T1}${sys_arr[6]}%"
-      # wlan
+      # ethernet
+      eth_cback=${color_sec_b1}; eth_cicon=${color_fore}; eth_cfore=${color_fore};
       if [ "${sys_arr[7]}" == "down" ]; then
-        wland_v="×"; wlanu_v="×";
-        wlan_cback=${color_sec_b2}; wlan_cicon=${color_disable}; wlan_cfore=${color_disable};
+        ethup="";
       else
-        wland_v=${sys_arr[7]}K; wlanu_v=${sys_arr[8]}K;
-        if [ ${wland_v:0:-3} -gt ${net_alert} ] || [ ${wlanu_v:0:-3} -gt ${net_alert} ]; then
-          wlan_cback=${color_net}; wlan_cicon=${color_back}; wlan_cfore=${color_back};
-        else
-          wlan_cback=${color_sec_b2}; wlan_cicon=${color_icon}; wlan_cfore=${color_fore};
-        fi
+        ethup=${icon_ethernet};
       fi
-      wland="%{F${wlan_cback}}${sep_left}%{F${wlan_cicon} B${wlan_cback}} %{T2}${icon_dl}%{F${wlan_cfore} T1} ${wland_v}"
-      wlanu="%{F${wlan_cicon}}${sep_l_left} %{T2}${icon_ul}%{F${wlan_cfore} T1} ${wlanu_v}"
+      ethernet="%{F${eth_cback}}${sep_left}%{F${eth_cicon} B${eth_cback}} %{T2}%{F${eth_cfore} T1}${ethup}"
+      # wlan
+      wlan_cback=${color_sec_b1}; wlan_cicon=${color_fore}; wlan_cfore=${color_fore};
+      if [ "${sys_arr[8]}" == "down" ]; then
+        wlanup="";
+      else
+        wlanup=${icon_wifi};
+      fi
+      wifi="%{F${wlan_cback}}${sep_left}%{F${wlan_cicon} B${wlan_cback}} %{T2}%{F${wlan_cfore} T1}${wlanup}"
+      # tether
+      teth_cback=${color_sec_b1}; teth_cicon=${color_fore}; teth_cfore=${color_fore};
+      if [ "${sys_arr[9]}" == "down" ]; then
+        tethup="";
+      else
+        tethup=${icon_tether};
+      fi
+      tether="%{F${teth_cback}}${sep_left}%{F${teth_cicon} B${teth_cback}} %{T2}%{F${teth_cfore} T1}${tethup}"
       # bat
-      bat="%{F${color_sec_b2}}${sep_left}%{B${color_sec_b2}}%{F${color_icon}}%{T2}%{F${color_fore} T1} ${icon_bat} ${sys_arr[9]}% ${sys_arr[10]}"
+      if [ "${sys_arr[11]}" == "D" ]; then
+        icon_bat="";
+      else
+        icon_bat="";
+      fi
+      bat="%{F${color_sec_b2}}${sep_left}%{B${color_sec_b2}}%{F${color_fore}}%{T2}%{F${color_fore} T1} ${icon_bat} ${sys_arr[10]}%"
       ;;
     VOL*)
       # Volume
-      vol="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_vol}%{F- T1} ${line#???}"
+      vol="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_vol}%{F- T1} ${line#???}"
       ;;
     GMA*)
       # Gmail
@@ -65,18 +80,6 @@ while read -r line ; do
         mail_cback=${color_sec_b1}; mail_cicon=${color_icon}; mail_cfore=${color_fore}
       fi
       gmail="%{F${mail_cback}}${sep_left}%{F${mail_cicon} B${mail_cback}} %{T2}${icon_mail}%{F${mail_cfore} T1} ${gmail}"
-      ;;
-    MPD*)
-      # Music
-      mpd_arr=(${line#???})
-      if [ -z "${line#???}" ]; then
-        song="×";
-      elif [ "${mpd_arr[0]}" == "error:" ]; then
-        song="mpd off";
-      else
-        song="${line#???}";
-      fi
-      mpd="%{F${color_sec_b2}}${sep_left}%{B${color_sec_b2}}%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_music}%{F${color_fore} T1}  ${song}"
       ;;
     WSP*)
       # I3 Workspaces
@@ -103,6 +106,6 @@ while read -r line ; do
   esac
 
   # And finally, output
-  printf "%s\n" "%{l}${wsp}${title} %{r}${mpd}${stab}${gmail}${stab}${cpu}${stab}${mem}${stab}${diskr}${stab}${wland}${stab}${wlanu}${stab}${vol}${stab}${bat}${stab}${date}${stab}${time}"
+  printf "%s\n" "%{l}${wsp}${title} %{r}${gmail}${stab}${cpu}${stab}${mem}${stab}${diskr}${stab}${vol}${stab}${ethernet}${wifi}${tether}${stab}${bat}${stab}${date}${stab}${time}"
   #printf "%s\n" "%{l}${wsp}${title}"
 done

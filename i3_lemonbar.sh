@@ -16,8 +16,14 @@ mkfifo "${panel_fifo}"
 
 ### EVENTS METERS
 
+while :; do
+
 # Window title, "WIN"
-xprop -spy -root _NET_ACTIVE_WINDOW | sed -un 's/.*\(0x.*\)/WIN\1/p' > "${panel_fifo}" &
+xprop -root _NET_ACTIVE_WINDOW | sed -un 's/.*\(0x.*\)/WIN\1/p' > "${panel_fifo}" &
+
+  sleep 0.5s;
+  
+done &
 
 # i3 Workspaces, "WSP"
 # TODO : Restarting I3 breaks the IPC socket con. :(
@@ -43,6 +49,12 @@ while :; do
     cnt_vol=0
   fi
 
+  sleep 0.5s;
+
+done &
+
+while :; do
+
   # GMAIL, "GMA"
   if [ $((cnt_mail++)) -ge ${upd_mail} ]; then
     printf "%s%s\n" "GMA" "$(~/.bin/gmail.sh)" > "${panel_fifo}"
@@ -50,7 +62,7 @@ while :; do
   fi
 
   # MPD
-  if [ $((cnt_mpd++)) -ge ${upd_mpd} ]; then
+  if [[ $((cnt_mpd++)) -ge ${upd_mpd} ]]; then
     #printf "%s%s\n" "MPD" "$(ncmpcpp --now-playing '{%a - %t}|{%f}' | head -c 60)" > "${panel_fifo}"
     printf "%s%s\n" "MPD" "$(mpc current -f '[[%artist% - ]%title%]|[%file%]' 2>&1 | head -c 70)" > "${panel_fifo}"
     cnt_mpd=0
