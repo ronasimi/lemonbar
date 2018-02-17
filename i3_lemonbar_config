@@ -4,32 +4,33 @@
 panel_fifo="/tmp/i3_lemonbar_${USER}"
 geometry="x14"
 font="-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1"
-iconfont="Wuncon Siji:size=10"
+iconfont="Material Design Icons:size=9"
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
 snd_cha=$(amixer get Master | grep "Playback channels:" | awk '{if ($4 == "") {printf "%s: Playback", $3} else {printf "%s %s: Playback", $3, $4}}')
 
 # Alarm settings
 cpu_alert=75                        # % cpu use
 net_alert=5                         # K net use
+bat_alert=20			    # low battery %
 
 # update setting, in seconds (conky update in i3_lemonbar_conky
 upd_vol=1                           # Volume update
 upd_mail=300                        # Mail check update
 
 # color definitions
-color_back="#CC2f343f"              # Default background
-color_fore="#CCf5f5f5"              # Default foreground
-color_head="#CC6a9fb5"              # Background for first element
+color_back="#CC2F343F"              # Default background
+color_fore="#CCAFAFAF"              # Default foreground
+color_head="#CC6A9FB5"              # Background for first element
 color_sec_b1="#CC282A2E"            # Background for section 1
 color_sec_b2="#CC454A4F"            # Background for section 2
 color_sec_b3="#CC60676E"            # Background for section 3
-color_icon="#CCAFAFAF"              # For icons
-color_mail="#CCf4bf75"              # Background color for mail alert
+color_icon="#CCF5F5F5"              # For icons
+color_mail="#CCF4BF75"              # Background color for mail alert
 color_chat="#CCCC6666"              # Background color for chat alert
-color_cpu="#CCac4142"               # Background color for cpu alert
+color_cpu="#CCAC4142"               # Background color for cpu alert
 color_disable="#CC1D1F21"           # Foreground for disable elements
-color_wsp="#CC90a959"               # Background for selected workspace
-color_bat="#CCac4142"               # Background for battery
+color_wsp="#CC90A959"               # Background for selected workspace
+color_bat="#CCAC4142"               # Background for battery
 #default space between sections
 if [ ${res_w} -gt 1024 ]; then
   stab='  '
@@ -44,17 +45,17 @@ sep_l_left=""                      # Powerline light separator left
 sep_l_right=""                     # Powerline light sepatator right
 
 # Icon glyphs from Terminusicons2
-icon_clock=""                      # Clock icon
-icon_cal=""			    # Calendar icon
-icon_cpu=""                        # CPU icon
-icon_mem=""                        # MEM icon
-icon_ethernet=""                    # Ethernet icon
-icon_wifi=""                        # Wifi icon
-icon_tether=""                     # Tether icon
-icon_vol=""                         # Volume icon
-icon_hd=""                          # HD / icon
-icon_mail=""                      # Mail icon
-icon_music=""                       # Music icon
-icon_prog=""                        # Window icon
-icon_wsp=""                        # Workspace icon
-#icon_bat=""			                   # Battery icon"
+icon_clock=""                      # Clock icon
+icon_cal=""			    # Calendar icon
+icon_cpu=""                        # CPU icon
+icon_mem=""                        # MEM icon
+icon_ethernet=""                    # Ethernet icon
+icon_wifi=""                        # Wifi icon
+icon_tether=""                     # Tether icon
+icon_vol=""                         # Volume icon
+icon_hd=""                          # HD / icon
+icon_mail=""                      # Mail icon
+icon_music=""                       # Music icon
+icon_prog=""                       # Window icon
+icon_wsp=""                        # Workspace icon
+#icon_bat=""			                   # Battery icon"

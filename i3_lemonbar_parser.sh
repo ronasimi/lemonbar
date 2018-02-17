@@ -36,36 +36,41 @@ while read -r line ; do
       # disk /
       diskr="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_hd} %{F- T1}${sys_arr[6]}%"
       # ethernet
-      eth_cback=${color_sec_b1}; eth_cicon=${color_fore}; eth_cfore=${color_fore};
+      eth_cback=${color_sec_b1}; eth_cfore=${color_fore};
       if [ "${sys_arr[7]}" == "down" ]; then
-        ethup="";
+        ethup=""; eth_cicon=${color_fore};
       else
-        ethup=${icon_ethernet};
+        ethup=${icon_ethernet}; eth_cicon=${color_icon};
       fi
-      ethernet="%{F${eth_cback}}${sep_left}%{F${eth_cicon} B${eth_cback}} %{T2}%{F${eth_cfore} T1}${ethup}"
+      ethernet="%{F${eth_cback}}${sep_left}%{F${eth_cicon} B${eth_cback}} %{T2}%{F${eth_cicon} T1}${ethup}";
       # wlan
-      wlan_cback=${color_sec_b1}; wlan_cicon=${color_fore}; wlan_cfore=${color_fore};
+      wlan_cback=${color_sec_b1}; wlan_cfore=${color_fore};
       if [ "${sys_arr[8]}" == "down" ]; then
-        wlanup="";
+        wlanup=""; wlan_cicon=${color_fore};
       else
-        wlanup=${icon_wifi};
+        wlanup=${icon_wifi}; wlan_cicon=${color_icon};
       fi
-      wifi="%{F${wlan_cback}}${sep_left}%{F${wlan_cicon} B${wlan_cback}} %{T2}%{F${wlan_cfore} T1}${wlanup}"
+      wifi="%{F${wlan_cback}}${sep_left}%{F${wlan_cicon} B${wlan_cback}} %{T2}%{F${wlan_cicon} T1}${wlanup}";
       # tether
-      teth_cback=${color_sec_b1}; teth_cicon=${color_fore}; teth_cfore=${color_fore};
+      teth_cback=${color_sec_b1}; teth_cicon=${color_icon}; teth_cfore=${color_fore};
       if [ "${sys_arr[9]}" == "down" ]; then
-        tethup="";
+        tethup=""; teth_cicon=${color_fore};
       else
-        tethup=${icon_tether};
-      fi
-      tether="%{F${teth_cback}}${sep_left}%{F${teth_cicon} B${teth_cback}} %{T2}%{F${teth_cfore} T1}${tethup}"
+        tethup=${icon_tether}; teth_cicon=${color_icon};
+      fi;
+      tether="%{F${teth_cback}}${sep_left}%{F${teth_cicon} B${teth_cback}} %{T2}%{F${teth_cicon} T1}${tethup}";
       # bat
       if [ "${sys_arr[11]}" == "D" ]; then
-        icon_bat="";
+        icon_bat="";
       else
-        icon_bat="";
+        icon_bat="";
       fi
-      bat="%{F${color_sec_b2}}${sep_left}%{B${color_sec_b2}}%{F${color_fore}}%{T2}%{F${color_fore} T1} ${icon_bat} ${sys_arr[10]}%"
+      if [ ${sys_arr[10]} -lt ${bat_alert} ]; then
+        bat_cback=${color_cpu}; bat_cicon=${color_back}; bat_cfore=${color_back};
+      else
+        bat_cback=${color_sec_b2}; bat_cicon=${color_icon}; bat_cfore=${color_fore};
+      fi
+      bat="%{F${bat_cback}}${sep_left}%{B${bat_cback}}%{F${bat_cfore}}%{T2}%{F${bat_cicon}%{F${bat_cfore} T1} ${icon_bat} ${sys_arr[10]}%"
       ;;
     VOL*)
       # Volume
