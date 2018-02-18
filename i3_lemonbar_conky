@@ -26,3 +26,4 @@ ${if_existing /proc/net/route enp0s26u1u1}up \
 ${else}down${endif} \
 ${battery_percent} \
 ${battery_short} \
+${execi 5 sensors | grep Package | cut -c17-18} \

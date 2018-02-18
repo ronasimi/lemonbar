@@ -13,7 +13,7 @@ title="%{F${color_head} B${color_sec_b2}}${sep_right}%{F${color_head} B${color_s
 while read -r line ; do
   case $line in
     SYS*)
-      # conky=, 0 = wday, 1 = mday, 2 = month, 3 = time, 4 = cpu, 5 = mem, 6 = disk /, 7 = disk /home, 8-9 = up/down wlan, 10-11 = up/down eth, 12-13=speed 14=bat
+      # conky=, 0 = wday, 1 = mday, 2 = month, 3 = time, 4 = cpu, 5 = memory percent, 6 = disk used /, 7 = eth up/down, 8 = wifi up/down, 9 = tether up/down, 10 = battery percent, 11 = battery charge/discharge, 13 = cpu temp
       sys_arr=(${line#???})
       # date
       if [ ${res_w} -gt 1024 ]; then
@@ -31,8 +31,15 @@ while read -r line ; do
         cpu_cback=${color_sec_b2}; cpu_cicon=${color_icon}; cpu_cfore=${color_fore};
       fi
       cpu="%{F${cpu_cback}}${sep_left}%{F${cpu_cicon} B${cpu_cback}} %{T2}${icon_cpu}%{F${cpu_cfore} T1} ${sys_arr[4]}%"
+      # temp
+      if [ ${sys_arr[13]} -ge ${temp_alert} ]; then
+        temp_cback=${color_cpu}; temp_cicon=${color_back}; temp_cfore=${color_back};
+      else
+        temp_cback=${color_sec_b1}; temp_cicon=${color_icon}; cpu_cfore=${color_fore};
+      fi
+      heat="%{F${temp_cback}}${sep_left}%{F${temp_cicon} B${temp_cback}} %{T2}${icon_temp}%{F- T1} ${sys_arr[13]}"  
       # mem
-      mem="%{F${cpu_cicon}}${icon_mem}%{F${cpu_cfore} T1} ${sys_arr[5]}"
+      mem="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_mem}%{F${color_fore} T1} ${sys_arr[5]}"
       # disk /
       diskr="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_hd} %{F- T1}${sys_arr[6]}%"
       # ethernet
@@ -70,7 +77,7 @@ while read -r line ; do
       else
         bat_cback=${color_sec_b2}; bat_cicon=${color_icon}; bat_cfore=${color_fore};
       fi
-      bat="%{F${bat_cback}}${sep_left}%{B${bat_cback}}%{F${bat_cfore}}%{T2}%{F${bat_cicon}%{F${bat_cfore} T1} ${icon_bat} ${sys_arr[10]}%"
+      bat="%{F${bat_cback}}${sep_left}%{B${bat_cback}}%{F${bat_cfore}}%{T2}%{F${bat_cicon}%{F${bat_cfore} T1} ${icon_bat} %{F- T1}${sys_arr[10]}%"
       ;;
     VOL*)
       # Volume
@@ -111,6 +118,6 @@ while read -r line ; do
   esac
 
   # And finally, output
-  printf "%s\n" "%{l}${wsp}${title} %{r}${gmail}${stab}${cpu}${stab}${mem}${stab}${diskr}${stab}${vol}${stab}${ethernet}${wifi}${tether}${stab}${bat}${stab}${date}${stab}${time}"
+  printf "%s\n" "%{l}${wsp}${title} %{r}${gmail}${stab}${cpu}${stab}${heat}${stab}${mem}${stab}${diskr}${stab}${vol}${stab}${ethernet}${wifi}${tether}${stab}${bat}${stab}${date}${stab}${time}"
   #printf "%s\n" "%{l}${wsp}${title}"
 done

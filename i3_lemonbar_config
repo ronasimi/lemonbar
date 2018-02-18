@@ -11,7 +11,8 @@ snd_cha=$(amixer get Master | grep "Playback channels:" | awk '{if ($4 == "") {p
 # Alarm settings
 cpu_alert=75                        # % cpu use
 net_alert=5                         # K net use
-bat_alert=15			    # low battery %
+bat_alert=5			    # low battery %
+temp_alert=90                       # high temp
 
 # update setting, in seconds (conky update in i3_lemonbar_conky
 upd_vol=1                           # Volume update
@@ -46,16 +47,16 @@ sep_l_right=""                     # Powerline light sepatator right
 
 # Icon glyphs from Terminusicons2
 icon_clock=""                      # Clock icon
-icon_cal=""			    # Calendar icon
+icon_cal=""			     # Calendar icon
 icon_cpu=""                        # CPU icon
 icon_mem=""                        # MEM icon
 icon_ethernet=""                    # Ethernet icon
-icon_wifi=""                        # Wifi icon
+icon_wifi=""                       # Wifi icon
 icon_tether=""                     # Tether icon
-icon_vol=""                         # Volume icon
-icon_hd=""                          # HD / icon
-icon_mail=""                      # Mail icon
-icon_music=""                       # Music icon
+icon_vol=""                        # Volume icon
+icon_hd=""                         # HD / icon
+icon_mail=""                       # Mail icon
+icon_music=""                      # Music icon
 icon_prog=""                       # Window icon
 icon_wsp=""                        # Workspace icon
-#icon_bat=""			                   # Battery icon"
+icon_temp=""			     # Temp icon"
