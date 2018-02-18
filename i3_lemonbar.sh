@@ -22,7 +22,7 @@ while :; do
 xprop -root _NET_ACTIVE_WINDOW | sed -un 's/.*\(0x.*\)/WIN\1/p' > "${panel_fifo}" &
 
   sleep 0.5s;
-  
+
 done &
 
 # i3 Workspaces, "WSP"
@@ -76,6 +76,14 @@ done &
 #### LOOP FIFO
 
 cat "${panel_fifo}" | $(dirname $0)/i3_lemonbar_parser.sh \
-  | lemonbar -p -f "${font}" -f "${iconfont}" -g "${geometry}" -B "${color_back}" -F "${color_fore}" &
+  | lemonbar -p -d -f "${font}" -f "${iconfont}" -g "${geometry}" -B "${color_back}" -F "${color_fore}" &
+
+tries_left=20
+while [ -z "$wid" -a "$tries_left" -gt 0 ] ; do
+  sleep 0.05
+  xdo above -t $(xwininfo -root -children | egrep -o "0x[[:xdigit:]]+" | tail -1) $(xdo id -a bar)
+  tries_left=$((tries_left - 1))
+done
+
 
 wait

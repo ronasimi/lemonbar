@@ -2,7 +2,7 @@
 # i3 panel config. Powerline style.
 
 panel_fifo="/tmp/i3_lemonbar_${USER}"
-geometry="x14"
+geometry="1310x14+28+7"
 font="-xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1"
 iconfont="Material Design Icons:size=9"
 res_w=$(xrandr | grep "current" | awk '{print $8a}')
@@ -11,7 +11,7 @@ snd_cha=$(amixer get Master | grep "Playback channels:" | awk '{if ($4 == "") {p
 # Alarm settings
 cpu_alert=75                        # % cpu use
 net_alert=5                         # K net use
-bat_alert=20			    # low battery %
+bat_alert=15			    # low battery %
 
 # update setting, in seconds (conky update in i3_lemonbar_conky
 upd_vol=1                           # Volume update
@@ -52,10 +52,10 @@ icon_mem=""                        # MEM icon
 icon_ethernet=""                    # Ethernet icon
 icon_wifi=""                        # Wifi icon
 icon_tether=""                     # Tether icon
-icon_vol=""                         # Volume icon
-icon_hd=""                          # HD / icon
+icon_vol=""                         # Volume icon
+icon_hd=""                          # HD / icon
 icon_mail=""                      # Mail icon
 icon_music=""                       # Music icon
 icon_prog=""                       # Window icon
 icon_wsp=""                        # Workspace icon
-#icon_bat=""			                   # Battery icon"
+#icon_bat=""			                   # Battery icon"

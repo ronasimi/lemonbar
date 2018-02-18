@@ -32,7 +32,7 @@ while read -r line ; do
       fi
       cpu="%{F${cpu_cback}}${sep_left}%{F${cpu_cicon} B${cpu_cback}} %{T2}${icon_cpu}%{F${cpu_cfore} T1} ${sys_arr[4]}%"
       # mem
-      mem="%{F${cpu_cicon}}${sep_l_left} %{T2}${icon_mem}%{F${cpu_cfore} T1} ${sys_arr[5]}"
+      mem="%{F${cpu_cicon}}${icon_mem}%{F${cpu_cfore} T1} ${sys_arr[5]}"
       # disk /
       diskr="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_hd} %{F- T1}${sys_arr[6]}%"
       # ethernet
@@ -61,12 +61,12 @@ while read -r line ; do
       tether="%{F${teth_cback}}${sep_left}%{F${teth_cicon} B${teth_cback}} %{T2}%{F${teth_cicon} T1}${tethup}";
       # bat
       if [ "${sys_arr[11]}" == "D" ]; then
-        icon_bat="";
+        icon_bat="";
       else
-        icon_bat="";
+        icon_bat="";
       fi
       if [ ${sys_arr[10]} -lt ${bat_alert} ]; then
-        bat_cback=${color_cpu}; bat_cicon=${color_back}; bat_cfore=${color_back};
+        bat_cback=${color_cpu}; bat_cicon=${color_back}; bat_cfore=${color_back}; icon_bat="";
       else
         bat_cback=${color_sec_b2}; bat_cicon=${color_icon}; bat_cfore=${color_fore};
       fi
