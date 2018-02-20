@@ -27,3 +27,5 @@ ${else}down${endif} \
 ${battery_percent} \
 ${battery_short} \
 ${execi 5 sensors | grep Package | cut -c17-18} \
+${exec amixer -c 0 get Master | grep Mono: | cut -c22-24} \
+
