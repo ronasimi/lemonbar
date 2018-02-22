@@ -13,7 +13,7 @@ title="%{F${color_head} B${color_sec_b2}}${sep_right}%{F${color_head} B${color_s
 while read -r line ; do
   case $line in
     SYS*)
-      # conky=, 0 = wday, 1 = mday, 2 = month, 3 = time, 4 = cpu, 5 = memory percent, 6 = disk used /, 7 = eth up/down, 8 = wifi up/down, 9 = tether up/down, 10 = battery percent, 11 = battery charge/discharge, 13 = cpu temp
+      # conky=, 0 = wday, 1 = mday, 2 = month, 3 = time, 4 = cpu, 5 = memory percent, 6 = disk used /, 7 = eth up/down, 8 = wifi up/down, 9 = tether up/down, 10 = battery percent, 11 = battery charge/discharge, 12 = cpu temp
       sys_arr=(${line#???})
       
       # date
@@ -41,7 +41,7 @@ while read -r line ; do
       else
         temp_cback=${color_sec_b1}; temp_cicon=${color_icon}; cpu_cfore=${color_fore};
       fi
-      heat="%{F${temp_cback}}${sep_left}%{F${temp_cicon} B${temp_cback}} %{T2}${icon_temp}%{F- T1} ${sys_arr[13]}"
+      heat="%{F${temp_cback}}${sep_left}%{F${temp_cicon} B${temp_cback}} %{T2}${icon_temp}%{F- T1} ${sys_arr[13]}%{F${temp_cicon}}"
       
       # mem
       mem="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_mem}%{F${color_fore} T1} ${sys_arr[5]}"
