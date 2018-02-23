@@ -77,7 +77,7 @@ while read -r line ; do
       # tether
       teth_cback=${color_sec_b1}; teth_cicon=${color_icon}; teth_cfore=${color_fore}
       if [ "${sys_arr[10]}" == "down" ]; then
-        tethup=""; teth_cicon=${color_fore};
+        tethup=""; teth_cicon=${color_fore};
       else
         tethup=${icon_tether}; teth_cicon=${color_icon};
       fi;
