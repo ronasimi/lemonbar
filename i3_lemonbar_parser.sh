@@ -41,7 +41,7 @@ while read -r line ; do
       else
         temp_cback=${color_sec_b1}; temp_cicon=${color_icon}; cpu_cfore=${color_fore};
       fi
-      heat="%{F${temp_cback}}${sep_left}%{F${temp_cicon} B${temp_cback}} %{T2}${icon_temp}%{F- T1} ${sys_arr[5]}%{F${temp_cicon}}"
+      heat="%{F${temp_cback}}${sep_left}%{F${temp_cicon} B${temp_cback}} %{T2}${icon_temp}%{F- T1} ${sys_arr[5]}°C"
       
       # mem
       mem="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_mem}%{F${color_fore} T1} ${sys_arr[6]}"
