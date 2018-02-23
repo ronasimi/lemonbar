@@ -89,12 +89,12 @@ while read -r line ; do
       else
         icon_bat="";
       fi
-      if [ ${sys_arr[13]} -lt ${bat_alert} ]; then
+      if [ ${sys_arr[12]} -lt ${bat_alert} ]; then
         bat_cback=${color_cpu}; bat_cicon=${color_icon}; bat_cfore=${color_fore}; icon_bat="";
       else
         bat_cback=${color_sec_b2}; bat_cicon=${color_icon}; bat_cfore=${color_fore};
       fi
-      bat="%{F${bat_cback}}${sep_left}%{F${bat_cicon} B${bat_cback}} %{T2}${icon_bat}%{F${bat_cfore} T1} ${sys_arr[13]}%"
+      bat="%{F${bat_cback}}${sep_left}%{F${bat_cicon} B${bat_cback}} %{T2}${icon_bat}%{F${bat_cfore} T1} ${sys_arr[12]}%"
       ;;
 
     VOL*)
