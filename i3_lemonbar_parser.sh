@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Input parser for i3 bar
-# 14 ago 2015 - Electro7
+# Feb 22 2018 - ronasimi
 
 # config
 . $(dirname $0)/i3_lemonbar_config
@@ -13,9 +13,9 @@ title="%{F${color_head} B${color_sec_b2}}${sep_right}%{F${color_head} B${color_s
 while read -r line ; do
   case $line in
     SYS*)
-      # conky=, 0 = wday, 1 = mday, 2 = month, 3 = time, 4 = cpu, 5 = memory percent, 6 = disk used /, 7 = eth up/down, 8 = wifi up/down, 9 = tether up/down, 10 = battery percent, 11 = battery charge/discharge, 12 = cpu temp
+      # conky=, 0 = wday, 1 = mday, 2 = month, 3 = time, 4 = cpu, 5 = cpu temp, 6 = memory percent, 7 = disk used /, 8 = eth up/down, 9 = wifi up/down, 10 = tether up/down, 11 = battery status, 13 = battery percent,
       sys_arr=(${line#???})
-      
+     
       # date
       if [ ${res_w} -gt 1024 ]; then
         date="${sys_arr[0]} ${sys_arr[1]} ${sys_arr[2]}"
@@ -35,23 +35,30 @@ while read -r line ; do
       fi
       cpu="%{F${cpu_cback}}${sep_left}%{F${cpu_cicon} B${cpu_cback}} %{T2}${icon_cpu}%{F${cpu_cfore} T1} ${sys_arr[4]}%"
       
-      # temp
-      if [ ${sys_arr[13]} -ge ${temp_alert} ]; then
+      # temperature
+      if [ ${sys_arr[5]} -ge ${temp_alert} ]; then
         temp_cback=${color_cpu}; temp_cicon=${color_icon}; temp_cfore=${color_fore};
       else
         temp_cback=${color_sec_b1}; temp_cicon=${color_icon}; cpu_cfore=${color_fore};
       fi
-      heat="%{F${temp_cback}}${sep_left}%{F${temp_cicon} B${temp_cback}} %{T2}${icon_temp}%{F- T1} ${sys_arr[13]}%{F${temp_cicon}}"
+      heat="%{F${temp_cback}}${sep_left}%{F${temp_cicon} B${temp_cback}} %{T2}${icon_temp}%{F- T1} ${sys_arr[5]}%{F${temp_cicon}}"
       
       # mem
-      mem="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_mem}%{F${color_fore} T1} ${sys_arr[5]}"
-      
+      mem="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_mem}%{F${color_fore} T1} ${sys_arr[6]}"
+     
       # disk /
-      diskr="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_hd} %{F- T1}${sys_arr[6]}%"
+      diskr="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_hd} %{F- T1}${sys_arr[7]}%"
       
+      # brightness
+      blDir='/sys/class/backlight/intel_backlight'
+      bright_cur=$(cat $blDir/actual_brightness) # current brightness
+      bright_max=$(cat $blDir/max_brightness)    # maximum brightness
+      bright_pct=$(echo "scale=3; ($bright_cur/$bright_max)*100" | bc | awk '{print int($1+0.5)}')
+      bright="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_bright} %{F- T1}${bright_pct}%"
+        
       # ethernet
       eth_cback=${color_sec_b1}; eth_cfore=${color_fore};
-      if [ "${sys_arr[7]}" == "down" ]; then
+      if [ "${sys_arr[8]}" == "down" ]; then
         ethup=""; eth_cicon=${color_fore};
       else
         ethup=${icon_ethernet}; eth_cicon=${color_icon};
@@ -60,7 +67,7 @@ while read -r line ; do
       
       # wlan
       wlan_cback=${color_sec_b1}; wlan_cfore=${color_fore};
-      if [ "${sys_arr[8]}" == "down" ]; then
+      if [ "${sys_arr[9]}" == "down" ]; then
         wlanup=""; wlan_cicon=${color_fore};
       else
         wlanup=${icon_wifi}; wlan_cicon=${color_icon};
@@ -69,32 +76,25 @@ while read -r line ; do
       
       # tether
       teth_cback=${color_sec_b1}; teth_cicon=${color_icon}; teth_cfore=${color_fore}
-      if [ "${sys_arr[9]}" == "down" ]; then
+      if [ "${sys_arr[10]}" == "down" ]; then
         tethup=""; teth_cicon=${color_fore};
       else
         tethup=${icon_tether}; teth_cicon=${color_icon};
       fi;
       tether="%{F${teth_cback}}${sep_left}%{F${teth_cicon} B${teth_cback}} %{T2}%{F${teth_cicon} T1}${tethup}"
-      
-      # brightness
-      blDir='/sys/class/backlight/intel_backlight'
-      bright_cur=$(cat $blDir/actual_brightness) # current brightness
-      bright_max=$(cat $blDir/max_brightness)    # maximum brightness
-      bright_pct=$(echo "scale=3; ($bright_cur/$bright_max)*100" | bc | awk '{print int($1+0.5)}')
-      bright="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_bright} %{F- T1}${bright_pct}%"
-      
+    
       # bat
       if [ "${sys_arr[11]}" == "D" ]; then
         icon_bat="";
       else
         icon_bat="";
       fi
-      if [ ${sys_arr[10]} -lt ${bat_alert} ]; then
+      if [ ${sys_arr[13]} -lt ${bat_alert} ]; then
         bat_cback=${color_cpu}; bat_cicon=${color_icon}; bat_cfore=${color_fore}; icon_bat="";
       else
         bat_cback=${color_sec_b2}; bat_cicon=${color_icon}; bat_cfore=${color_fore};
       fi
-      bat="%{F${bat_cback}}${sep_left}%{F${bat_cicon} B${bat_cback}} %{T2}${icon_bat}%{F${bat_cfore} T1} ${sys_arr[10]}%"
+      bat="%{F${bat_cback}}${sep_left}%{F${bat_cicon} B${bat_cback}} %{T2}${icon_bat}%{F${bat_cfore} T1} ${sys_arr[13]}%"
       ;;
 
     VOL*)
