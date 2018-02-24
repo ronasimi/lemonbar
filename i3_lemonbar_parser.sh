@@ -84,7 +84,7 @@ while read -r line ; do
       tether="%{F${teth_cback}}${sep_left}%{F${teth_cicon} B${teth_cback}} %{T2}%{F${teth_cicon} T1}${tethup}"
     
       # bat
-      if [ "${sys_arr[11]}" == "D" ]; then
+      if [ "${sys_arr[11]}" == "off" ]; then
         icon_bat="";
       else
         icon_bat="";
