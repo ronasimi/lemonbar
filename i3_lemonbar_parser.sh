@@ -13,7 +13,7 @@ title="%{F${color_head} B${color_sec_b2}}${sep_right}%{F${color_head} B${color_s
 while read -r line ; do
   case $line in
     SYS*)
-      # conky=, 0 = wday, 1 = mday, 2 = month, 3 = time, 4 = cpu, 5 = cpu temp, 6 = memory percent, 7 = disk used /, 8 = eth up/down, 9 = wifi up/down, 10 = tether up/down, 11 = battery status, 13 = battery percent,
+      # conky=, 0 = wday, 1 = mday, 2 = month, 3 = time, 4 = cpu, 5 = cpu temp, 6 = memory percent, 7 = disk used /, 8 = eth up/down, 9 = wifi up/down, 10 = tether up/down, 11 = a/c status, 13 = battery percent,
       sys_arr=(${line#???})
      
       # date
@@ -54,7 +54,7 @@ while read -r line ; do
       bright_cur=$(cat $blDir/actual_brightness) # current brightness
       bright_max=$(cat $blDir/max_brightness)    # maximum brightness
       bright_pct=$(echo "scale=3; ($bright_cur/$bright_max)*100" | bc | awk '{print int($1+0.5)}')
-      bright="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_bright} %{F- T1}${bright_pct}%"
+      bright="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_bright} %{F- T1}${bright_pct}%"
         
       # ethernet
       eth_cback=${color_sec_b1}; eth_cfore=${color_fore};
@@ -99,7 +99,7 @@ while read -r line ; do
 
     VOL*)
       # Volume
-      vol="%{F${color_sec_b2}}${sep_left}%{F${color_icon} B${color_sec_b2}} %{T2}${icon_vol}%{F${color_fore} T1} ${line#???}"
+      vol="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_vol}%{F${color_fore} T1} ${line#???}"
       ;;
 
     GMA*)
@@ -138,5 +138,5 @@ while read -r line ; do
   esac
 
   # And finally, output
-  printf "%s\n" "%{l}${wsp}${title} %{r}${gmail}${stab}${cpu}${stab}${heat}${stab}${mem}${stab}${diskr}${stab}${vol}${stab}${bright}${stab}${bat}${stab}${ethernet}${wifi}${tether}${stab}${date}${stab}${time}"
+  printf "%s\n" "%{l}${wsp}${title} %{r}${gmail}${stab}${cpu}${stab}${heat}${stab}${mem}${stab}${diskr}${stab}${bright}${stab}${vol}${stab}${bat}${stab}${ethernet}${wifi}${tether}${stab}${date}${stab}${time}"
 done
