@@ -59,38 +59,60 @@ while read -r line ; do
       # ethernet
       eth_cback=${color_sec_b1}; eth_cfore=${color_fore};
       if [ "${sys_arr[8]}" == "down" ]; then
-        ethup=""; eth_cicon=${color_fore};
+        ethup=${icon_ethdown}; eth_cicon=${color_fore};
       else
-        ethup=${icon_ethernet}; eth_cicon=${color_icon};
+        ethup=${icon_ethup}; eth_cicon=${color_icon};
       fi
       ethernet="%{F${eth_cback}}${sep_left}%{F${eth_cicon} B${eth_cback}} %{T2}%{F${eth_cicon} T1}${ethup}"
       
       # wlan
       wlan_cback=${color_sec_b1}; wlan_cfore=${color_fore};
       if [ "${sys_arr[9]}" == "down" ]; then
-        wlanup=""; wlan_cicon=${color_fore};
+        wlanup=${icon_wifi_down}; wlan_cicon=${color_fore};
       else
-        wlanup=${icon_wifi}; wlan_cicon=${color_icon};
+        wlanup=${icon_wifi_up}; wlan_cicon=${color_icon};
       fi
       wifi="%{F${wlan_cback}}${sep_left}%{F${wlan_cicon} B${wlan_cback}} %{T2}%{F${wlan_cicon} T1}${wlanup}"
       
       # tether
       teth_cback=${color_sec_b1}; teth_cicon=${color_icon}; teth_cfore=${color_fore}
       if [ "${sys_arr[10]}" == "down" ]; then
-        tethup=""; teth_cicon=${color_fore};
+        tethup=${icon_tether_down}; teth_cicon=${color_fore};
       else
-        tethup=${icon_tether}; teth_cicon=${color_icon};
+        tethup=${icon_tether_up}; teth_cicon=${color_icon};
       fi;
       tether="%{F${teth_cback}}${sep_left}%{F${teth_cicon} B${teth_cback}} %{T2}%{F${teth_cicon} T1}${tethup}"
     
       # bat
-      if [ "${sys_arr[11]}" == "off" ]; then
-        icon_bat="";
+      if [ "${sys_arr[11]}" != "off" ]; then
+        icon_bat=${icon_charge};
       else
-        icon_bat="";
+        if [ "${sys_arr[12]}" -ge 95 ]; then
+        icon_bat=${icon_full};
+          elif [ "${sys_arr[12]}" -ge 90 ]; then
+          icon_bat=${icon_90};
+          elif [ "${sys_arr[12]}" -ge 80 ]; then
+          icon_bat=${icon_80};
+          elif [ "${sys_arr[12]}" -ge 70 ]; then
+          icon_bat=${icon_70};
+          elif [ "${sys_arr[12]}" -ge 60 ]; then
+          icon_bat=${icon_60};
+          elif [ "${sys_arr[12]}" -ge 50 ]; then
+          icon_bat=${icon_50};
+          elif [ "${sys_arr[12]}" -ge 40 ]; then
+          icon_bat=${icon_40};
+          elif [ "${sys_arr[12]}" -ge 30 ]; then
+          icon_bat=${icon_30};
+          elif [ "${sys_arr[12]}" -ge 20 ]; then
+          icon_bat=${icon_20};
+          elif [ "${sys_arr[12]}" -ge 10 ]; then
+          icon_bat=${icon_10};
+          elif [ "${sys_arr[12]}" -gt ${bat_alert} ]; then
+          icon_bat=${icon_0};
+          fi
       fi
-      if [ ${sys_arr[12]} -lt ${bat_alert} ]; then
-        bat_cback=${color_cpu}; bat_cicon=${color_icon}; bat_cfore=${color_fore}; icon_bat="";
+      if [ ${sys_arr[12]} -le ${bat_alert} ]; then
+        bat_cback=${color_cpu}; bat_cicon=${color_icon}; bat_cfore=${color_fore}; icon_bat=${icon_low};
       else
         bat_cback=${color_sec_b2}; bat_cicon=${color_icon}; bat_cfore=${color_fore};
       fi
@@ -99,6 +121,12 @@ while read -r line ; do
 
     VOL*)
       # Volume
+      isMuted=$(pacmd list-sinks | grep "muted" | cut -c 9-10)
+      if [ "${isMuted}" == "ye" ]; then
+      icon_vol="";
+      else
+      icon_vol="";
+      fi
       vol="%{F${color_sec_b1}}${sep_left}%{F${color_icon} B${color_sec_b1}} %{T2}${icon_vol}%{F${color_fore} T1} ${line#???}"
       ;;
 
