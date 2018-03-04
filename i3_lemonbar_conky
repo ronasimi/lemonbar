@@ -1,18 +1,21 @@
-# Conky for external bar
-# out simple text to console
+conky.config = {
+-- Conky for external bar
+-- out simple text to console
 
-background no
-update_interval 1
-total_run_times 0
-override_utf8_locale yes
-short_units yes
-uppercase no
-out_to_console yes
-out_to_x no
-if_up_strictness address
-format_human_readable true
+	background = false,
+	update_interval = 1,
+	total_run_times = 0,
+	override_utf8_locale = true,
+	short_units = true,
+	uppercase = false,
+	out_to_console = true,
+	out_to_x = false,
+	if_up_strictness = 'address',
+	format_human_readable = true,
 
-TEXT
+};
+
+conky.text = [[
 SYS\
 ${time %a %b %d %H:%M} \
 ${cpu} \
@@ -26,3 +29,4 @@ ${exec acpi -a | grep Adapter | cut -c12-14} \
 ${battery_percent} \
 
 
+]];

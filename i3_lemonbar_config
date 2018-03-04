@@ -65,7 +65,7 @@ icon_temp=""			     # Temp icon
 icon_bright=""                     # Brightness icon
 
 icon_charge=""                      # On charger icon
-icon_95=""                         # Full battery icon
+icon_full=""                       # Full battery icon
 icon_90=""                         # 90% battery icon
 icon_80=""                         # 80% battery icon
 icon_70=""                         # 70% battery icon
@@ -75,5 +75,5 @@ icon_40=""                         # 40% battery icon
 icon_30=""                         # 30% battery icon
 icon_20=""                         # 20% battery icon
 icon_10=""                         # 10% battery icon
-icon_0=""                          # 10% battery icon
+icon_0=""                          # 0% battery icon
 icon_low=""                        # Low battery icon
