@@ -71,6 +71,8 @@ done &
 cat "${panel_fifo}" | $(dirname $0)/i3_lemonbar_parser.sh \
   | lemonbar -p -d -f "${font}" -f "${iconfont}" -g "${geometry}" -B "${color_back}" -F "${color_fore}" &
 
+#### Keep lemonbar below fullscreen windows
+
 tries_left=20
 while [ -z "$wid" -a "$tries_left" -gt 0 ] ; do
   sleep 0.05
