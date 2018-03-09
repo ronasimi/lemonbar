@@ -1,9 +1,9 @@
 #!/usr/bin/env perl
 # vim:ts=4:sw=4:expandtab:ft=perl
-# 
+#
 # Print i3 workspaces on every change.
-# 
-# Format: 
+#
+# Format:
 #   For every workspace (x = workspace name)
 #       - "FOCx" -> Focused workspace
 #       - "INAx" -> Inactive workspace
@@ -22,15 +22,14 @@ use AnyEvent;
 use v5.10;
 
 my $socket_path = undef;
-my ($workspaces, $outputs) = ([], {});
+my ( $workspaces, $outputs ) = ( [], {} );
 my $w = AnyEvent->timer(
     after => 3,
-    cb => sub {
+    cb    => sub {
         die "Connection to i3 timed out. Verify socket path ($socket_path)";
         exit 1;
     }
 );
-
 
 my $i3 = i3($socket_path);
 
@@ -44,11 +43,12 @@ sub reconnect {
     print "reconecting\n";
     my $timer;
     $i3 = i3($socket_path);
-    if (!defined($w)) {
+    if ( !defined($w) ) {
         $w = AnyEvent->timer(
             after => 3,
-            cb => sub {
-                die "Connection to i3 timed out. Verify socket path ($socket_path)";
+            cb    => sub {
+                die
+"Connection to i3 timed out. Verify socket path ($socket_path)";
                 exit 1;
             }
         );
@@ -57,7 +57,7 @@ sub reconnect {
     my $c = sub {
         $timer = AnyEvent->timer(
             after => 0.01,
-            cb => sub { $i3->connect->cb(\&connected) }
+            cb    => sub { $i3->connect->cb( \&connected ) }
         );
     };
     $c->();
@@ -67,39 +67,43 @@ sub reconnect {
 sub connected {
     my ($cv) = @_;
 
-    if (!$cv->recv) {
+    if ( !$cv->recv ) {
         reconnect();
         return;
     }
 
     $w = undef;
 
-    $i3->subscribe({
-        workspace => \&ws_change,
-        output => \&output_change,
-        _error => sub { reconnect() }
-    });
+    $i3->subscribe(
+        {
+            workspace => \&ws_change,
+            output    => \&output_change,
+            _error    => sub { reconnect() }
+        }
+    );
     ws_change();
     output_change();
 }
 
 # Called when a ws changes
 sub ws_change {
+
     # Request the current workspaces and update the output afterwards
     $i3->get_workspaces->cb(
         sub {
             my ($cv) = @_;
             $workspaces = $cv->recv;
             update_output();
-        });
+        }
+    );
 }
 
 # Called when the reply to the GET_OUTPUTS message arrives
 sub got_outputs {
     my $reply = shift->recv;
-    my %new = map { ($_->{name}, $_) } grep { $_->{active} } @{$reply};
+    my %new = map { ( $_->{name}, $_ ) } grep { $_->{active} } @{$reply};
 
-    for my $name (keys %new) {
+    for my $name ( keys %new ) {
         $outputs->{$name} = $new{$name};
     }
 
@@ -107,16 +111,16 @@ sub got_outputs {
 }
 
 sub output_change {
-    $i3->get_outputs->cb(\&got_outputs)
+    $i3->get_outputs->cb( \&got_outputs );
 }
 
 sub update_output {
     my $out;
 
-    for my $name (keys %{$outputs}) {
+    for my $name ( keys %{$outputs} ) {
         $out .= "WSP";
 
-        for my $ws (@{$workspaces}) {
+        for my $ws ( @{$workspaces} ) {
             my $state = "INA";
             $state = "ACT" if $ws->{visible};
             $state = "URG" if $ws->{urgent};
@@ -131,8 +135,7 @@ sub update_output {
     }
 }
 
-$i3->connect->cb(\&connected);
+$i3->connect->cb( \&connected );
 
 # let AnyEvent do the rest ("endless loop")
 AnyEvent->condvar->recv
-

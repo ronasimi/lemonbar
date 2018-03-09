@@ -5,8 +5,8 @@
 . $(dirname $0)/i3_lemonbar_config
 
 if [ $(pgrep -cx $(basename $0)) -gt 1 ] ; then
-    printf "%s\n" "The status bar is already running." >&2
-    exit 1
+  printf "%s\n" "The status bar is already running." >&2
+  exit 1
 fi
 
 trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
@@ -18,8 +18,8 @@ mkfifo "${panel_fifo}"
 
 while :; do
 
-# Window title, "WIN"
-xprop -root _NET_ACTIVE_WINDOW | sed -un 's/.*\(0x.*\)/WIN\1/p' > "${panel_fifo}" &
+  # Window title, "WIN"
+  xprop -root _NET_ACTIVE_WINDOW | sed -un 's/.*\(0x.*\)/WIN\1/p' > "${panel_fifo}" &
 
   sleep 0.5s;
 

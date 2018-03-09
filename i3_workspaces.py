@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-# 
+#
 # Print i3 workspaces on every change.
-# 
-# Format: 
+#
+# Format:
 #   For every workspace (x = workspace name)
 #       - "FOCx" -> Focused workspace
 #       - "INAx" -> Inactive workspace
@@ -21,13 +21,14 @@ import subprocess
 
 import i3
 
+
 class State(object):
     # workspace states
     focused = 'FOC'
     active = 'ACT'
     inactive = 'INA'
     urgent = 'URG'
-    
+
     def get_state(self, workspace, output):
         if workspace['focused']:
             if output['current_workspace'] == workspace['name']:
@@ -44,7 +45,7 @@ class i3ws(object):
     ws_format = '%s%s '
     end_format = 'WSP%s'
     state = State()
-    
+
     def __init__(self, state=None):
         if state:
             self.state = state
@@ -55,19 +56,20 @@ class i3ws(object):
         outputs = self.socket.get('get_outputs')
         self.display(self.format(workspaces, outputs))
         # Subscribe to an event
-        callback = lambda data, event, _: self.change(data, event)
+
+        def callback(data, event, _): return self.change(data, event)
         self.subscription = i3.Subscription(callback, 'workspace')
-    
+
     def change(self, event, workspaces):
         # Receives event and workspace data
         if 'change' in event:
             outputs = self.socket.get('get_outputs')
             text = self.format(workspaces, outputs)
             self.display(text)
-    
+
     def format(self, workspaces, outputs):
         # Formats the text according to the workspace data given.
-        out = '' 
+        out = ''
         for workspace in workspaces:
             output = None
             for output_ in outputs:
@@ -78,18 +80,19 @@ class i3ws(object):
                 continue
             st = self.state.get_state(workspace, output)
             name = workspace['name']
-            item= self.ws_format % (st, name)
+            item = self.ws_format % (st, name)
             out += item
         return self.end_format % out
-    
+
     def display(self, text):
         # Displays the text in stout
         print(text)
         sys.stdout.flush()
-    
+
     def quit(self):
         # Quits the i3ws; closes the subscription and terminates
         self.subscription.close()
+
 
 if __name__ == '__main__':
     ws = i3ws()
