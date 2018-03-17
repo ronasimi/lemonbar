@@ -29,10 +29,6 @@ done &
 # TODO : Restarting I3 breaks the IPC socket con. :(
 $(dirname $0)/i3_workspaces.pl > "${panel_fifo}" &
 
-# IRC, "IRC"
-# only for init
-~/.bin/irc_warn &
-
 # Conky, "SYS"
 conky -c $(dirname $0)/i3_lemonbar_conky > "${panel_fifo}" &
 
