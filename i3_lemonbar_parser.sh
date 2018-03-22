@@ -89,26 +89,24 @@ while read -r line ; do
       else
         if [ "${sys_arr[12]}" -ge 95 ]; then
           icon_bat=${icon_full};
-        elif [ "${sys_arr[12]}" -ge 90 ]; then
+        elif [ "${sys_arr[12]}" -ge 85 ]; then
           icon_bat=${icon_90};
-        elif [ "${sys_arr[12]}" -ge 80 ]; then
+        elif [ "${sys_arr[12]}" -ge 75 ]; then
           icon_bat=${icon_80};
-        elif [ "${sys_arr[12]}" -ge 70 ]; then
+        elif [ "${sys_arr[12]}" -ge 65 ]; then
           icon_bat=${icon_70};
-        elif [ "${sys_arr[12]}" -ge 60 ]; then
+        elif [ "${sys_arr[12]}" -ge 55 ]; then
           icon_bat=${icon_60};
-        elif [ "${sys_arr[12]}" -ge 50 ]; then
+        elif [ "${sys_arr[12]}" -ge 45 ]; then
           icon_bat=${icon_50};
-        elif [ "${sys_arr[12]}" -ge 40 ]; then
+        elif [ "${sys_arr[12]}" -ge 35 ]; then
           icon_bat=${icon_40};
-        elif [ "${sys_arr[12]}" -ge 30 ]; then
+        elif [ "${sys_arr[12]}" -ge 25 ]; then
           icon_bat=${icon_30};
-        elif [ "${sys_arr[12]}" -ge 20 ]; then
+        elif [ "${sys_arr[12]}" -ge 15 ]; then
           icon_bat=${icon_20};
-        elif [ "${sys_arr[12]}" -ge 10 ]; then
-          icon_bat=${icon_10};
         elif [ "${sys_arr[12]}" -gt ${bat_alert} ]; then
-          icon_bat=${icon_0};
+          icon_bat=${icon_10};
         fi
       fi
       if [ ${sys_arr[12]} -le ${bat_alert} ]; then
