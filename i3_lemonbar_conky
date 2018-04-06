@@ -24,7 +24,7 @@ ${mem} \
 ${fs_used_perc /} \
 ${if_existing /proc/net/route enp0s25}up ${else}down${endif} \
 ${if_up wlp3s0}up ${else}down${endif} \
-${if_existing /proc/net/route enp0s26u1u1}up ${else}down${endif} \
+${if_existing /proc/net/route enp0s29u1u2}up ${else}down${endif} \
 ${exec acpi -a | grep Adapter | cut -c12-14} \
 ${battery_percent} \
 

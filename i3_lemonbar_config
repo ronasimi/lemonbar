@@ -26,7 +26,7 @@ color_sec_b1="#CC282A2E"            # Background for section 1
 color_sec_b2="#CC454A4F"            # Background for section 2
 color_sec_b3="#CC60676E"            # Background for section 3
 color_icon="#CCF5F5F5"              # For icons
-color_mail="#CCF4BF75"              # Background color for mail alert
+color_mail="#CCF49F75"              # Background color for mail alert
 color_chat="#CCCC6666"              # Background color for chat alert
 color_cpu="#CCAC4142"               # Background color for cpu alert
 color_disable="#CC1D1F21"           # Foreground for disable elements
@@ -48,7 +48,7 @@ sep_l_right=""                     # Powerline light sepatator right
 # Icon glyphs from Material Icons
 icon_clock=""                      # Clock icon
 icon_cal=""		            # Calendar icon
-icon_cpu=""                        # CPU icon
+icon_cpu=""                        # CPU icon
 icon_mem=""                        # MEM icon
 icon_ethup=""                      # Ethernet up icon
 icon_ethdown=""	            # Ethernet down icon

@@ -57,8 +57,8 @@ while :; do
     cnt_mail=0
   fi
 
-  # Finally, wait 1 second
-  sleep 1s;
+  # Finally, wait 10 seconds
+  sleep 10s;
 
 done &
 
